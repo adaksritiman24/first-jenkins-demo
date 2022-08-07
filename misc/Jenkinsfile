@@ -15,22 +15,18 @@ node {
      }
    }
    stage('Build') {
-			steps {
 				sh 'docker build -t sritiman24/docker-nodejs-demo-jenkins .'
-			}
 		}
 
 		stage('Login') {
 
-			steps {
 				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-			}
+
 		}
 
 		stage('Push') {
 
-			steps {
 				sh 'docker push sritiman24/docker-nodejs-demo-jenkins'
-			}
+
     }
 }
