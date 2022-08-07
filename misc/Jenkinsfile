@@ -12,8 +12,14 @@ node {
      }
    }
    stage('docker build/push') {
-     docker.withRegistry('https://index.docker.io/v1/', 'docker-hub') {
-       def app = docker.build("sritiman24/docker-nodejs-demo:${commit_id}", '.').push()
-     }
+      dockerBuildAndPublish {
+            repositoryName('sritiman24/docker-nodejs-demo-pipeline')
+            tag('${GIT_REVISION,length=9}')
+            registryCredentials('docker-hub')
+            forcePull(false)
+            forceTag(false)
+            createFingerprints(false)
+            skipDecorate()
+      }
    }
 }
