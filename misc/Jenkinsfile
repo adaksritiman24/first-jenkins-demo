@@ -1,8 +1,5 @@
 node {
    def commit_id
-   environment {
-		DOCKERHUB_CREDENTIALS=credentials('docker-hub')
-	}
    stage('Preparation') {
      checkout scm
      sh "git rev-parse --short HEAD > .git/commit-id"                        
@@ -14,19 +11,9 @@ node {
        sh 'npm test'
      }
    }
-   stage('Build') {
-				sh 'docker build -t sritiman24/docker-nodejs-demo-jenkins .'
-		}
-
-		stage('Login') {
-
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-
-		}
-
-		stage('Push') {
-
-				sh 'docker push sritiman24/docker-nodejs-demo-jenkins'
-
-    }
+   stage('docker build/push') {
+     docker.withRegistry('https://index.docker.io/v2/', 'docker-hub-jenkins') {
+       def app = docker.build("sritiman24/docker-nodejs-demo-jenkins:${commit_id}", '.').push()
+     }
+   }
 }
