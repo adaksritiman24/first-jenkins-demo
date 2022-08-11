@@ -7,6 +7,9 @@ app.get('/home', (req, res) =>{
 app.get('/myhome', (req, res) =>{
   res.send('Hello Myself!');
 });
+app.get('/yourhome', (req, res) =>{
+  res.send('Hello Boss!');
+});
 
 var server = app.listen(3000,  ()=> {
   var host = server.address().address;
