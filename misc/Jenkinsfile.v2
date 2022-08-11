@@ -34,12 +34,8 @@ node {
               usernameVariable: 'username',
               passwordVariable: 'password')
           ]){
-    print "Username: "+username + "|  password: "+password
      sh "docker login -u ${username} -p ${password}"
       sh "docker push sritiman24/docker-nodejs-demo-jenkins-withdb-v2:${commit_id}"
     }
    }
-  //  stage('deploy to localhost') {
-  //    sh "docker run -p 3000:3000 sritiman24/docker-nodejs-demo-jenkins-withdb:${commit_id}"
-  //  }                                       
 }                                          
