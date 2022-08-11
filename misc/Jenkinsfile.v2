@@ -22,10 +22,15 @@ node {
           sh 'npm test'                     
      }                                   
      mysql.stop()
-   }                                     
-   stage('docker build/push') {            
+   }
+
+   stage('docker build') {
+      dockerImage = docker.build("sritiman24/docker-nodejs-demo-jenkins-withdb-v2:${commit_id}")
+   }
+
+   stage('docker push') {
      docker.withRegistry('https://index.docker.io/v2/', 'docker-hub-jenkins') {
-       def app = docker.build("sritiman24/docker-nodejs-demo-jenkins-withdb-v2:${commit_id}", '.').push()
+      dockerImage.push()
      }                                    
    }
   //  stage('deploy to localhost') {
