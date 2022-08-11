@@ -1,8 +1,11 @@
 var express = require('express');
 var app = express();
 
-app.get('/', (req, res) =>{
-  res.send('Hello Jenkins!');
+app.get('/home', (req, res) =>{
+  res.send('Hello Jenkins and Docker!');
+});
+app.get('/myhome', (req, res) =>{
+  res.send('Hello Myself!');
 });
 
 var server = app.listen(3000,  ()=> {
